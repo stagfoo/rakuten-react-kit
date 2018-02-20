@@ -22,12 +22,13 @@ import { onChangeIncrementalSearch } from 'domain/middleware/user';
 
 export function App() {
 
-  const sheet = new Fairybread('global');
-  sheet.ensure('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-  sheet.add('.row', `
+  const sheet = new Fairybread({global: true}).css`
+  @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css);
+  body {
     display: flex;
     align-items: center;
-  `);
+  }
+  `;
 
   const content = (pageName => {
     switch (pageName) { case 'HOME_PAGE':
@@ -45,7 +46,8 @@ export function App() {
 
   return (
     <div className={`${sheet.id} container`}>
-      <style>{sheet.render('raw').css}</style>
+      {/* this is because of jsx */}
+      <style>{sheet.innerHTML}</style>
       <div className='row'>
 
         <div className='col-sm-2'>

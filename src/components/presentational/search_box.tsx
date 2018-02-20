@@ -8,19 +8,18 @@
 
 import * as React from 'react';
 import Fairybread from 'fairybread';
-
+const styles = new Fairybread({ global:false });
 export default function SearchBox({shadowColor, onChangeText}:
                   {shadowColor: string, onChangeText: (s: string) => void}) {
 
-  const sheet = new Fairybread();
-
-  sheet.add('div', `
+  const sheet = styles.css`
+  :host div {
     width: 60%;
     margin: 20px auto;
     border-top: 1px solid #999;
-    text-align: center;`);
-
-  sheet.add('input', `
+    text-align: center;
+  }
+  :host input {
     border: solid ${shadowColor} 2px;
     border-radius: 5px;
     box-shadow: 4px 4px 0 ${shadowColor};
@@ -30,13 +29,16 @@ export default function SearchBox({shadowColor, onChangeText}:
     font: 600 14px/1 $font-family;
     margin: 30px 0.5rem 14px auto;
     padding: 6px 12px;
-    text-align: left;`);
-
-  sheet.add('.search-box:focus', 'outline: 0;');
+    text-align: left;
+  }
+  :host .search-box:focus {
+    outline: 0;
+  }
+  `;
 
   return(
     <div className={sheet.id}>
-      <style>{sheet.render('raw').css}</style>
+      <style>{sheet.innerHTML}</style>
       <input
         type='text'
         onChange={event => onChangeText(event.target.value)}

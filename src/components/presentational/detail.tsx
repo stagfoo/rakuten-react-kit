@@ -15,17 +15,20 @@
 import * as React from 'react';
 import { DetailItem } from 'domain/store/main';
 import Fairybread from 'fairybread';
-
+const styles = new Fairybread();
 // Exports List as a importable function
 export default function Detail( { detail, loading } :
                         { detail: DetailItem, loading: boolean }) {
-
-  const sheet = new Fairybread();
-  sheet.add('i', 'font-size:50px');
-  sheet.add('td', 'width: 150px');
-
+  const sheet = styles.css`
+  :host i {
+    font-size:50px
+  }
+  :host td {
+    width: 150px
+  }
+  `
   return <div className={`${sheet.id} row`}>
-    <style>{sheet.render('raw').css}</style>
+    <style>{sheet.innerHTML}</style>
     <div className="column-sm-10">
       <table className="table">
         <thead>
@@ -55,7 +58,7 @@ export default function Detail( { detail, loading } :
     <div className="column-sm-2">
       {
         !loading  &&
-          <img src={ detail.sprites.frontDefault } alt={detail.name} />   
+          <img src={ detail.sprites.frontDefault } alt={detail.name} />
       }
     </div>
  </div>;
