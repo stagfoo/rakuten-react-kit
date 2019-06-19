@@ -8,30 +8,5 @@
  */
 
 import { getLogger } from 'domain/logger';
-import {filter, map, every } from 'lodash';
-import { Item } from 'domain/store/main';
-import { allItems } from 'domain/store/selectors/main';
-import { updateFilteredItems, updateShadowColor } from 'domain/store/reducers/main';
-
 const logger = getLogger('Middleware/user');
 
-function filterByName(name: string): Array<Item> {
-  const items = allItems();
-  if (name.length > 0) {
-    const searchWordsArray = name.replace(/^[\s]+|[\s]+$/g, '').split(/\s/);
-    return filter(items, item => {
-      const results = map(searchWordsArray, word => item.name.search(new RegExp(word, 'i')));
-      return every(results, result => result !== -1);
-    });
-  }
-  return items;
-}
-
-export function onChangeIncrementalSearch(name: string): void {
-  logger.debug('Incremental Search By Name');
-  updateFilteredItems(filterByName(name));
-}
-
-export function onMouseMove(e: MouseEvent) {
-  updateShadowColor(`#${(e.x + e.y).toString(16)}`);
-}

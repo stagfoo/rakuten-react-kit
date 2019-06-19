@@ -14,49 +14,19 @@
 
 import * as React from 'react';
 import { DetailItem } from 'domain/store/main';
-import Fairybread from 'fairybread';
-
+import { Loading } from 'components/presentational/loading';
 // Exports List as a importable function
-export default function Detail( { detail, loading } :
-                        { detail: DetailItem, loading: boolean }) {
-
-  const sheet = new Fairybread();
-  sheet.add('i', 'font-size:50px');
-  sheet.add('td', 'width: 150px');
-
-  return <div className={`${sheet.id} row`}>
-    <style>{sheet.render('raw').css}</style>
-    <div className="column-sm-10">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Height</th>
-            <th>Weight</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            loading?
-              <tr>
-                <td>Now loading ...</td>
-                <td></td>
-                <td></td>
-              </tr>:
-              <tr>
-                <td>{detail.name}</td>
-                <td>{detail.height}</td>
-                <td>{detail.weight}</td>
-              </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-    <div className="column-sm-2">
-      {
-        !loading  &&
-          <img src={ detail.sprites.frontDefault } alt={detail.name} />   
-      }
-    </div>
- </div>;
+export default function Detail({ detail, loading }:
+  { detail: DetailItem, loading: boolean }) {
+  return <article>
+        <a
+          href='javascript:history.back()'
+          type="button" className="btn btn-default">Back</a>
+        <Loading loading={loading} >
+          <p><b>Name:</b> {detail.name}</p>
+          <p><b>Height:</b> {detail.height}</p>
+          <p><b>Weight:</b> {detail.weight}</p>
+          <p><img src={detail.sprites.frontDefault} alt={detail.name} /></p>
+        </Loading>
+  </article>;
 }
