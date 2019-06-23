@@ -1,15 +1,6 @@
-/*
- * Rakuten React kit
- *
- * Copyright © 2016 Rakuten, Inc. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import { getLogger } from 'domain/logger';
 import { Item, DetailItem, DetailItemFromNetwork } from 'domain/store/main';
-import { updateAllItems, updateFilteredItems, updateDetailItem, updateLoading } from 'domain/store/reducers/main';
+import { updateAllItems, updateDetailItem, updateLoading } from 'domain/store/reducers/main';
 
 type Pokemon = { pokemon: { pokemon: { name: string; url: string } }[] };
 
@@ -50,7 +41,6 @@ function camelCaseImageFront(detail: DetailItemFromNetwork): DetailItem {
 export function onListFromNetwork(list: Array<Item>) {
   logger.debug('List from network');
   updateAllItems(list);
-  updateFilteredItems(list);
 }
 
 export function onDetailFromNetwork(detail: DetailItemFromNetwork) {
